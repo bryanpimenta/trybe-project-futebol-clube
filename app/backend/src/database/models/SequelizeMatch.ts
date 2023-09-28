@@ -7,7 +7,7 @@ import {
 } from 'sequelize';
 import db from '.';
 
-import Team from './TeamModel';
+import Team from './SequelizeTeam';
 
 class Match extends Model<InferAttributes<Match>,
 InferCreationAttributes<Match>> {
