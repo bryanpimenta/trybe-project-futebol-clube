@@ -8,8 +8,8 @@ export default class TeamsController {
   ) { }
 
   public async getTeams(_req: Request, res: Response) {
-    const { data } = await this.teamService.getTeams();
-    res.status(200).json(data);
+    const { status, data } = await this.teamService.getTeams();
+    res.status(mapStatusHTTP(status)).json(data);
   }
 
   public async getTeamsById(req: Request, res: Response) {
@@ -21,6 +21,6 @@ export default class TeamsController {
       return res.status(mapStatusHTTP(status)).json(data);
     }
 
-    res.status(200).json(data);
+    res.status(mapStatusHTTP(status)).json(data);
   }
 }
