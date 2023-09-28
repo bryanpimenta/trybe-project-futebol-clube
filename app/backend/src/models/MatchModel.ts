@@ -1,7 +1,7 @@
-import { IMatch } from './../Interfaces/matches/IMatch';
+import { IMatch } from '../Interfaces/matches/IMatch';
 import SequelizeMatch from '../database/models/SequelizeMatch';
 import { IMatchModel } from '../Interfaces/matches/IMatchModel';
-import { NewEntity } from '../Interfaces/index';
+// import { NewEntity } from '../Interfaces/index';
 
 export default class MatchModel implements IMatchModel {
   private model = SequelizeMatch;
@@ -16,8 +16,9 @@ export default class MatchModel implements IMatchModel {
 
   async findAll(): Promise<IMatch[]> {
     const dbData = await this.model.findAll();
-    return dbData.map(({ id, homeTeamId, homeTeamGoals, awayTeamId, awayTeamGoals, inProgress}) => (
-      { id, homeTeamId, homeTeamGoals, awayTeamId, awayTeamGoals, inProgress }
-    ));
+    return dbData
+      .map(({ id, homeTeamId, homeTeamGoals, awayTeamId, awayTeamGoals, inProgress }) => (
+        { id, homeTeamId, homeTeamGoals, awayTeamId, awayTeamGoals, inProgress }
+      ));
   }
 }
