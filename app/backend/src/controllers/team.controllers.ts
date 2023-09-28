@@ -8,19 +8,19 @@ export default class TeamsController {
   ) { }
 
   public async getTeams(_req: Request, res: Response) {
-    const serviceResponse = await this.teamService.getTeams();
-    res.status(200).json(serviceResponse.data);
+    const { data } = await this.teamService.getTeams();
+    res.status(200).json(data);
   }
 
   public async getTeamsById(req: Request, res: Response) {
     const { id } = req.params;
 
-    const serviceResponse = await this.teamService.getTeamById(Number(id));
+    const { status, data } = await this.teamService.getTeamById(Number(id));
 
-    if (serviceResponse.status !== 'SUCCESSFUL') {
-      return res.status(mapStatusHTTP(serviceResponse.status)).json(serviceResponse.data);
+    if (status !== 'successful') {
+      return res.status(mapStatusHTTP(status)).json(data);
     }
 
-    res.status(200).json(serviceResponse.data);
+    res.status(200).json(data);
   }
 }
