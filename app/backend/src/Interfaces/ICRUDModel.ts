@@ -1,4 +1,4 @@
-import { ID } from './index';
+export type ID = number;
 
 export interface ICRUDModelCreator<T> {
   create(data: Partial<T>): Promise<T>,
