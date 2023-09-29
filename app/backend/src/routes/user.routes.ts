@@ -12,6 +12,10 @@ router.post(
   (req: Request, res: Response) => userController.login(req, res),
 );
 
-router.get('/', (req: Request, res: Response) => res.status(200).json({ message: 'Hello World' }));
+router.get(
+  '/role',
+  Validations.validateToken,
+  (req: Request, res: Response) => UsersController.getRole(req, res),
+);
 
 export default router;
