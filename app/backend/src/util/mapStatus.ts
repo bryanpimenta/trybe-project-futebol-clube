@@ -19,10 +19,10 @@ const httpMap: HttpMap = {
   created: 201,
   notFound: 404,
   conflict: 409,
-  invalidValue: 422,
+  invalidValue: 401,
   deleted: 204,
 };
 
-const mapStatusHTTP = (status: keyof HttpMap): number => httpMap[status] || 500;
+const mapStatusHTTP = (status: keyof HttpMap): number => httpMap[status];
 
 export default mapStatusHTTP;
