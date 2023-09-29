@@ -1,7 +1,6 @@
 import { IMatch } from '../Interfaces/matches/IMatch';
 import SequelizeMatch from '../database/models/SequelizeMatch';
 import { IMatchModel } from '../Interfaces/matches/IMatchModel';
-// import { NewEntity } from '../Interfaces/index';
 
 export default class MatchModel implements IMatchModel {
   private model = SequelizeMatch;
