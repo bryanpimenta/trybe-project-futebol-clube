@@ -11,7 +11,7 @@ const { expect } = chai;
 
 chai.use(chaiHttp);
 
-describe('Route /teams', function () {
+describe('Testes para a rota de teams', function () {
   afterEach(function () {
     sinon.restore();
   });
@@ -24,14 +24,14 @@ describe('Route /teams', function () {
       expect(body).to.deep.equal(teams);
     });
 
-    it('deve retornar o time por seu id', async function() {
+    it('deve retornar o time por seu id', async function () {
       sinon.stub(SequelizeTeam, 'findOne').resolves(team as any);
       const { status, body } = await chai.request(app).get('/teams/5');
       expect(status).to.equal(200);
       expect(body).to.deep.equal(team);
     });
-  
-    it('deve retornar que o time não foi encontrado ', async function() {
+
+    it('deve retornar que o time não foi encontrado ', async function () {
       sinon.stub(SequelizeTeam, 'findOne').resolves(null);
       const { status, body } = await chai.request(app).get('/teams/999');
       expect(status).to.equal(404);
