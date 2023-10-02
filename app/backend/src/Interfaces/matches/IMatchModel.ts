@@ -1,6 +1,7 @@
-import { ICRUDModelReader, ICRUDModelUpdater } from '../ICRUDModel';
+import { ICRUDModelReader, ICRUDModelUpdater, ICRUDModelCreator } from '../ICRUDModel';
 import { IMatchResponse } from './IMatch';
 
 export interface IMatchModel extends
   ICRUDModelReader<IMatchResponse>,
-  ICRUDModelUpdater<IMatchResponse> { }
+  ICRUDModelUpdater<IMatchResponse>,
+  ICRUDModelCreator<IMatchResponse> { }

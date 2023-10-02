@@ -5,6 +5,7 @@ type HttpMap = {
   conflict: number;
   invalidValue: number;
   deleted: number;
+  unprocessable: number;
 };
 
 export type ResponseMessage = { message: string };
@@ -21,6 +22,7 @@ const httpMap: HttpMap = {
   conflict: 409,
   invalidValue: 401,
   deleted: 204,
+  unprocessable: 422,
 };
 
 const mapStatusHTTP = (status: keyof HttpMap): number => httpMap[status];

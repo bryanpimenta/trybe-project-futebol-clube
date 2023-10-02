@@ -39,4 +39,9 @@ export default class MatchModel implements IMatchModel {
     });
     return dbData?.toJSON() as IMatchResponse;
   }
+
+  async create(data: Omit<IMatch, 'id'>): Promise<IMatchResponse> {
+    const dbData = await this.model.create(data);
+    return dbData.toJSON() as IMatchResponse;
+  }
 }
