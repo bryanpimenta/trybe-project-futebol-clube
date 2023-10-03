@@ -10,3 +10,5 @@ export type ILeaderboard = {
   goalsBalance: number,
   efficiency: string,
 };
+
+export type matchType = 'home' | 'away' | undefined;

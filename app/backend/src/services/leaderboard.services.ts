@@ -3,7 +3,7 @@ import MatchModel from '../models/MatchModel';
 import { IMatchModel } from '../Interfaces/matches/IMatchModel';
 import { IMatch } from '../Interfaces/matches/IMatch';
 import { ITeam } from '../Interfaces/teams/ITeam';
-import { ILeaderboard } from '../Interfaces/leaderboards/ILeaderboard';
+import { ILeaderboard, matchType } from '../Interfaces/leaderboards/ILeaderboard';
 import TeamModel from '../models/TeamModel';
 
 export default class LeaderboardController {
@@ -50,9 +50,16 @@ export default class LeaderboardController {
     return leaderboard;
   }
 
-  private static getTeamMatches(teamId: number, finishedMatches: IMatch[]): IMatch[] {
-    return finishedMatches
-      .filter((match) => match.homeTeamId === teamId || match.awayTeamId === teamId);
+  private static getTeamMatches(teamId: number, finishedMatches: IMatch[], mt: matchType):
+  IMatch[] {
+    return finishedMatches.filter((match) => {
+      if (mt === 'home') {
+        return match.homeTeamId === teamId;
+      } if (mt === 'away') {
+        return match.awayTeamId === teamId;
+      }
+      return match.homeTeamId === teamId || match.awayTeamId === teamId;
+    });
   }
 
   private static calculateEfficiency(points: number, totalMatches: number): string {
@@ -87,14 +94,14 @@ export default class LeaderboardController {
     return { wins, draws, losses };
   }
 
-  private static calculateLeaderboard(teams: ITeam[], finishedMatches: IMatch[]): ILeaderboard[] {
+  private static leaderboard(teams: ITeam[], finishedMatches: IMatch[], mt: matchType):
+  ILeaderboard[] {
     return teams.map((team) => {
-      const teamMatches = LeaderboardController.getTeamMatches(team.id, finishedMatches);
+      const teamMatches = LeaderboardController.getTeamMatches(team.id, finishedMatches, mt);
       const { goalsFavor, goalsOwn } = LeaderboardController.calculateGoals(teamMatches, team.id);
       const { wins, draws, losses } = LeaderboardController.calculateResults(teamMatches, team.id);
       const points = LeaderboardController.calculatePoints(wins, draws);
-      return {
-        name: team.teamName,
+      return { name: team.teamName,
         totalPoints: points,
         totalGames: teamMatches.length,
         totalVictories: wins,
@@ -108,11 +115,11 @@ export default class LeaderboardController {
     });
   }
 
-  public async getLeaderboard(): Promise<ResponseService<ILeaderboard[]>> {
+  public async getLeaderboard(mt: matchType): Promise<ResponseService<ILeaderboard[]>> {
     const teams = await this.teamModel.findAll();
     const matches = await this.matchModel.findAll();
     const finishedMatches = matches.filter((match) => match.inProgress === false);
-    const leaderboard = LeaderboardController.calculateLeaderboard(teams, finishedMatches);
+    const leaderboard = LeaderboardController.leaderboard(teams, finishedMatches, mt);
     const sortedLeaderboard = LeaderboardController.sortLeaderboard(leaderboard);
 
     return { status: 'successful', data: sortedLeaderboard };
