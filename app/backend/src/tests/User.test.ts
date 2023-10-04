@@ -3,7 +3,6 @@ import * as chai from 'chai';
 
 // @ts-ignore
 import chaiHttp = require('chai-http');
-
 import { app } from '../app';
 import {
     invalidEmailLoginBody, invalidPasswordLoginBody,
@@ -11,12 +10,9 @@ import {
 } from './mocks/users.mock';
 import JWT from '../util/jwt';
 import Validations from '../../src/middlewares/Validations';
-
 import SequelizeUser from '../../src/database/models/SequelizeUser';
-import User from '../../src/database/models/SequelizeUser';
 
 chai.use(chaiHttp);
-
 const { expect } = chai;
 
 describe('Testes para a rota de login', function () {

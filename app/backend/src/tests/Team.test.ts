@@ -1,4 +1,3 @@
-
 import * as sinon from 'sinon';
 import * as chai from 'chai';
 // @ts-ignore
@@ -8,7 +7,6 @@ import SequelizeTeam from '../database/models/SequelizeTeam';
 import { teams, team } from './mocks/teams.mock';
 
 const { expect } = chai;
-
 chai.use(chaiHttp);
 
 describe('Testes para a rota de teams', function () {
