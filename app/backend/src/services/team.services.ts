@@ -18,4 +18,5 @@ export default class TeamService {
     if (!team) return { status: 'notFound', data: { message: `Team ${id} not found` } };
     return { status: 'successful', data: team };
   }
+
 }

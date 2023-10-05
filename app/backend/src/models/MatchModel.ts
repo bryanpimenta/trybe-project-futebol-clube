@@ -7,17 +7,6 @@ import { NewEntity } from '../Interfaces/index';
 export default class MatchModel implements IMatchModel {
   private model = SequelizeMatch;
 
-  async findById(id: IMatch['id']): Promise<IMatchResponse | null> {
-    const dbData = await this.model.findByPk(id, {
-      include: [
-        { model: SequelizeTeam, as: 'homeTeam', attributes: ['teamName'] },
-        { model: SequelizeTeam, as: 'awayTeam', attributes: ['teamName'] },
-      ],
-    });
-    if (!dbData) return null;
-    return dbData.toJSON() as IMatchResponse;
-  }
-
   async findAll(): Promise<IMatchResponse[]> {
     const dbData = await this.model.findAll({
       include: [
@@ -29,15 +18,8 @@ export default class MatchModel implements IMatchModel {
   }
 
   async update(id: IMatch['id'], data: Partial<NewEntity<IMatch>>): Promise<IMatchResponse | null> {
-    const [affectedRows] = await this.model.update(data, { where: { id } });
-    if (affectedRows === 0) return null;
-    const dbData = await this.model.findByPk(id, {
-      include: [
-        { model: SequelizeTeam, as: 'homeTeam', attributes: ['teamName'] },
-        { model: SequelizeTeam, as: 'awayTeam', attributes: ['teamName'] },
-      ],
-    });
-    return dbData?.toJSON() as IMatchResponse;
+    await this.model.update(data, { where: { id } });
+    return null;
   }
 
   async create(data: Omit<IMatch, 'id'>): Promise<IMatchResponse> {

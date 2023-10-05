@@ -6,7 +6,7 @@ import chaiHttp = require('chai-http');
 import { app } from '../app';
 import {
     invalidEmailLoginBody, invalidPasswordLoginBody,
-    validLoginBody, wrongPassUser, validUser, validToken,
+    validLoginBody, validUser, validToken,
 } from './mocks/users.mock';
 import JWT from '../util/jwt';
 import Validations from '../../src/middlewares/Validations';
@@ -29,6 +29,14 @@ describe('Testes para a rota de login', function () {
         it('não deve logar com uma senha inválida', async function () {
             const { status, body } = await chai.request(app).post('/login')
                 .send(invalidPasswordLoginBody);
+
+            expect(status).to.equal(401);
+            expect(body).to.be.deep.equal({ message: 'Invalid email or password' });
+        });
+        
+        it('não deve logar com email inválido', async function () {
+            const { status, body } = await chai.request(app).post('/login')
+                .send(invalidEmailLoginBody);
 
             expect(status).to.equal(401);
             expect(body).to.be.deep.equal({ message: 'Invalid email or password' });
@@ -63,7 +71,7 @@ describe('Testes para a rota de login', function () {
             expect(body.message).to.equal('Token not found');
         });
 
-        it('retorna dados com o token valido', async function () {
+        it('deve retornar dados com o token valido', async function () {
             sinon.stub(JWT, 'verify').resolves();
             sinon.stub(Validations, 'validateToken').returns(Promise.resolve());
 
