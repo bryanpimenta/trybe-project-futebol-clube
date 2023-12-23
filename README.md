@@ -19,15 +19,23 @@ Para executar o projeto, você deve ter o Docker instalado em sua máquina. Em s
 Utilize o comando `npm test` na pasta `app/back-end`. Esse comando irá executar os testes de integração e  verificará se os comportamentos esperados estão sendo corretamente implementados na API. Para verificar a cobertura dos testes, utilize: `npm run test:coverage`.
 
 ## :bulb: Endpoints Disponíveis
+
+### Rota /teams
 - `GET /teams`: Retorna a lista de times cadastrados no banco de dados.
 - `GET /teams/:id`: Retorna as informações de um time específico.
+  
+### Rota /login
 - `POST /login`: Efetua o login do usuário e gera um token.
 - `GET /login/role`: Retorna o role do usuário logado.
+
+### Rota /matches
 - `GET /matches`: Retorna a lista de partidas cadastrados no banco de dados.
 - `GET /matches?inProgress=`: Se true, retorna a lista de partidas em andamento no banco de dados, se false, as partidas finalizadas.
 - `PATCH /matches/:id/finish`: Finalizar uma partida no banco de dados.
 - `PATCH /matches/:id`: Atualizar o número de gols das partidas em andamento.
 - `POST /matches`: Cadastra uma nova partida em andamento no banco de dados.
+
+### Rota /leaderboard
 - `GET /leaderboard/home`: Retorne as informações do desempenho dos times da casa com as propriedades: name, totalPoints, totalGames, totalVictories, totalDraws, totalLosses, goalsFavor e goalsOwn.
 - `GET /leaderboard/away`: Retorne as informações do desempenho dos times visitantes com as propriedades: name, totalPoints, totalGames, totalVictories, totalDraws, totalLosses, goalsFavor e goalsOwn.
 - `GET /leaderboard/`:  Retorna a classificação geral dos times.
